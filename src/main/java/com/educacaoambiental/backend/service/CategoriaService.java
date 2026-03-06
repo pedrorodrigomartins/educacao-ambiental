@@ -26,14 +26,14 @@ public class CategoriaService {
         } else {
             throw new RuntimeException("Categoria nao foi encontrada");
         }
-        // Se não encontrar, lançar exceção
-        // (ex: RuntimeException ou criar uma personalizada depois)
     }
 
     public Categoria criarCategoria(Categoria categoria) {
+        if (categoriaRepository.existsByDescricao(categoria.getDescricao())) {
+            throw new RuntimeException("Essa categoria já existe");
+        }
+
         return categoriaRepository.save(categoria);
-        // Validar se já existe categoria com
-        // mesma descrição (opcional, mas recomendado)
     }
 
     public void deletarCategoria(Long id) {

@@ -1,4 +1,4 @@
-package com.educacaoambiental.backend.entity;
+package com.educacaoambiental.backend.entity.enums;
 
 public enum TipoConteudo {
     LIVRO,

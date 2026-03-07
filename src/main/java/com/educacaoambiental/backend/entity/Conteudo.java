@@ -1,5 +1,6 @@
 package com.educacaoambiental.backend.entity;
 
+import com.educacaoambiental.backend.entity.enums.TipoConteudo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

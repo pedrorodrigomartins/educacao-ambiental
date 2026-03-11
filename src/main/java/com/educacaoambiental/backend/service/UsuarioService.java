@@ -32,7 +32,7 @@ public class UsuarioService {
     }
 
     public Usuario buscarPorEmail(String email) {
-        Optional<Usuario> usuario = usuarioRepository.buscarPorEmail(email);
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
         return usuario.orElseThrow(
                 () -> new RuntimeException(
                         "Usuário nao foi encontrado! email: " + email + ", tipo: " +

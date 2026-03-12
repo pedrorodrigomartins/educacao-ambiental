@@ -1,6 +1,7 @@
 package com.educacaoambiental.backend.controller;
 
-import com.educacaoambiental.backend.entity.Usuario;
+import com.educacaoambiental.backend.dto.UsuarioCreateDTO;
+import com.educacaoambiental.backend.dto.UsuarioResponseDTO;
 import com.educacaoambiental.backend.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,36 +22,41 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> listarUsuarios() {
-        return usuarioService.listarUsuarios();
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.listarUsuarios();
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
-        Usuario obj = usuarioService.buscarPorId(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable Long id) {
+        UsuarioResponseDTO usuario = usuarioService.buscarPorId(id);
+        return ResponseEntity.ok(usuario);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<Usuario> buscarPorEmail(@PathVariable String email) {
-        Usuario obj = usuarioService.buscarPorEmail(email);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<UsuarioResponseDTO> buscarPorEmail(@PathVariable String email) {
+        UsuarioResponseDTO usuario = usuarioService.buscarPorEmail(email);
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping
-    public ResponseEntity<Void> criarUsuario(@Valid @RequestBody Usuario obj) {
-        usuarioService.criarUsuario(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
-                path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<UsuarioResponseDTO> criarUsuario(
+            @Valid @RequestBody UsuarioCreateDTO dto) {
+        UsuarioResponseDTO usuario = usuarioService.criarUsuario(dto);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(usuario.id())
+                .toUri();
+        return ResponseEntity.created(uri).body(usuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarUsuario(
-            @Valid @RequestBody Usuario obj, @PathVariable Long id) {
-        obj.setId(id);
-        usuarioService.atualizarUsuario(obj);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
+            @Valid @RequestBody UsuarioCreateDTO dto,
+            @PathVariable Long id) {
+        UsuarioResponseDTO usuario = usuarioService.atualizarUsuario(id, dto);
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/{id}")

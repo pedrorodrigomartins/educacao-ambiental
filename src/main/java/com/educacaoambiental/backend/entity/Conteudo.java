@@ -35,7 +35,7 @@ public class Conteudo {
     @Enumerated(EnumType.STRING)
     private TipoConteudo tipoConteudo;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinTable(
             name = "conteudo_categoria",

@@ -1,12 +1,13 @@
 package com.educacaoambiental.backend.service;
 
+import com.educacaoambiental.backend.dto.UsuarioCreateDTO;
+import com.educacaoambiental.backend.dto.UsuarioResponseDTO;
 import com.educacaoambiental.backend.entity.Usuario;
+import com.educacaoambiental.backend.mapper.UsuarioMapper;
 import com.educacaoambiental.backend.repository.UsuarioRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -17,50 +18,55 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> listarUsuarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .map(UsuarioMapper::toResponseDTO)
+                .toList();
     }
 
-    public Usuario buscarPorId(Long id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.orElseThrow(
-                () -> new RuntimeException(
-                        "Usuário nao foi encontrado! id: " + id + ", tipo: " +
-                                Usuario.class.getName()
-                )
-        );
+    public UsuarioResponseDTO buscarPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Usuário não encontrado. Id: " + id
+                ));
+
+        return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public Usuario buscarPorEmail(String email) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        return usuario.orElseThrow(
-                () -> new RuntimeException(
-                        "Usuário nao foi encontrado! email: " + email + ", tipo: " +
-                                Usuario.class.getName()
-                )
-        );
+    public UsuarioResponseDTO buscarPorEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException(
+                        "Usuário não encontrado. Email: " + email
+                ));
+
+        return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public Usuario criarUsuario(Usuario usuario) {
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+    public UsuarioResponseDTO criarUsuario(UsuarioCreateDTO dto) {
+        if (usuarioRepository.existsByEmail(dto.email())) {
             throw new RuntimeException("Já existe um usuário com esse email");
         }
 
-        return usuarioRepository.save(usuario);
+        Usuario usuario = UsuarioMapper.toEntity(dto);
+        usuario = usuarioRepository.save(usuario);
+
+        return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public @Valid Usuario atualizarUsuario(@Valid Usuario obj) {
-        Usuario usuarioExistente = usuarioRepository.findById(obj.getId())
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioCreateDTO dto) {
+
+        Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(
-                        "Usuário não encontrado. Id: " + obj.getId()
+                        "Usuário não encontrado. Id: " + id
                 ));
+        usuarioExistente.setNome(dto.nome());
+        usuarioExistente.setEmail(dto.email());
+        usuarioExistente.setSenha(dto.senha());
+        usuarioExistente.setTipoUsuario(dto.tipoUsuario());
 
-        usuarioExistente.setNome(obj.getNome());
-        usuarioExistente.setEmail(obj.getEmail());
-        usuarioExistente.setSenha(obj.getSenha());
-        usuarioExistente.setTipoUsuario(obj.getTipoUsuario());
-
-        return usuarioRepository.save(usuarioExistente);
+        usuarioExistente = usuarioRepository.save(usuarioExistente);
+        return UsuarioMapper.toResponseDTO(usuarioExistente);
     }
 
     public void deletarUsuario(Long id) {

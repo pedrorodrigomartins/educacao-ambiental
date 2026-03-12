@@ -6,5 +6,6 @@ public record UsuarioCreateDTO(
         Long id,
         String nome,
         String email,
+        String senha,
         TipoUsuario tipoUsuario
 ) {}

@@ -32,7 +32,7 @@ public class Categoria {
     @NotBlank(message = "A descrição é obrigatória")
     private String descricao;
 
-    @ManyToMany(mappedBy = "categorias")
+    @OneToMany(mappedBy = "categorias")
     @JsonIgnore
     private Set<Conteudo> conteudos = new HashSet<>();
 

@@ -1,5 +1,6 @@
 package com.educacaoambiental.backend.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,6 +47,21 @@ public class GlobalExcptionHandler{
                 .map(error -> Map.of(
                         "field", error.getField(),
                         "message", error.getDefaultMessage()))
+                .collect(Collectors.toList()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleViolation(ConstraintViolationException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("timestamp", LocalDateTime.now());
+        response.put("message", "Erro de validação de parâmetros");
+        response.put("errors", ex.getConstraintViolations()
+                .stream()
+                .map(error -> Map.of(
+                        "field", error.getPropertyPath().toString(),
+                        "message", error.getMessage()))
                 .collect(Collectors.toList()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

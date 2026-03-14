@@ -1,6 +1,8 @@
 package com.educacaoambiental.backend.service;
 
 import com.educacaoambiental.backend.entity.Conteudo;
+import com.educacaoambiental.backend.exception.BusinessException;
+import com.educacaoambiental.backend.exception.ResourceNotFoundException;
 import com.educacaoambiental.backend.repository.ConteudoRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +26,13 @@ public class ConteudoService {
         if (conteudoRepository.existsById(id)) {
             return conteudoRepository.findById(id);
         } else {
-            throw new RuntimeException("Conteudo não foi encontrado");
+            throw new ResourceNotFoundException("Conteudo não foi encontrado");
         }
     }
 
     public Conteudo criarConteudo(Conteudo conteudo) {
         if (conteudoRepository.existsByTitulo(conteudo.getTitulo())) {
-            throw new RuntimeException("Esse conteúdo já existe");
+            throw new BusinessException("Esse conteúdo já existe");
         }
 
         return conteudoRepository.save(conteudo);
@@ -39,7 +41,7 @@ public class ConteudoService {
     public Conteudo atualizarConteudo(Long id, Conteudo dadosAtualizados) {
 
         Conteudo conteudo = conteudoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conteúdo não existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Conteúdo não existe"));
 
         conteudo.setTitulo(dadosAtualizados.getTitulo());
         conteudo.setTipoConteudo(dadosAtualizados.getTipoConteudo());
@@ -50,7 +52,7 @@ public class ConteudoService {
 
     public void deletarConteudo(Long id) {
         Conteudo conteudo = conteudoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conteúdo não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Conteúdo não encontrado"));
 
         conteudoRepository.delete(conteudo);
     }

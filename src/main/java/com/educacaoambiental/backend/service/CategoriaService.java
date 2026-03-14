@@ -1,6 +1,8 @@
 package com.educacaoambiental.backend.service;
 
 import com.educacaoambiental.backend.entity.Categoria;
+import com.educacaoambiental.backend.exception.BusinessException;
+import com.educacaoambiental.backend.exception.ResourceNotFoundException;
 import com.educacaoambiental.backend.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +26,13 @@ public class CategoriaService {
         if (categoriaRepository.existsById(id)) {
             return categoriaRepository.findById(id);
         } else {
-            throw new RuntimeException("Categoria nao foi encontrada");
+            throw new ResourceNotFoundException("Categoria nao foi encontrada");
         }
     }
 
     public Categoria criarCategoria(Categoria categoria) {
         if (categoriaRepository.existsByDescricao(categoria.getDescricao())) {
-            throw new RuntimeException("Essa categoria já existe");
+            throw new BusinessException("Essa categoria já existe");
         }
 
         return categoriaRepository.save(categoria);
@@ -40,13 +42,13 @@ public class CategoriaService {
         if (categoriaRepository.existsById(id)) {
             categoriaRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Impossivel, Categoria essa nao existe");
+            throw new ResourceNotFoundException("Impossivel, Categoria essa nao existe");
         }
     }
 
     public Categoria atualizarCategoria(Long id, Categoria categoria) {
         categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
         categoria.setConteudos(categoria.getConteudos());
         categoria.setDescricao(categoria.getDescricao());

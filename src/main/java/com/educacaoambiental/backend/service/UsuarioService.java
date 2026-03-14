@@ -3,6 +3,8 @@ package com.educacaoambiental.backend.service;
 import com.educacaoambiental.backend.dto.UsuarioCreateDTO;
 import com.educacaoambiental.backend.dto.UsuarioResponseDTO;
 import com.educacaoambiental.backend.entity.Usuario;
+import com.educacaoambiental.backend.exception.BusinessException;
+import com.educacaoambiental.backend.exception.ResourceNotFoundException;
 import com.educacaoambiental.backend.mapper.UsuarioMapper;
 import com.educacaoambiental.backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,8 @@ public class UsuarioService {
 
     public UsuarioResponseDTO buscarPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
-                        "Usuário não encontrado. Id: " + id
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Usuário não encontrado! id: " + id
                 ));
 
         return UsuarioMapper.toResponseDTO(usuario);
@@ -36,7 +38,7 @@ public class UsuarioService {
 
     public UsuarioResponseDTO buscarPorEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "Usuário não encontrado. Email: " + email
                 ));
 
@@ -45,7 +47,7 @@ public class UsuarioService {
 
     public UsuarioResponseDTO criarUsuario(UsuarioCreateDTO dto) {
         if (usuarioRepository.existsByEmail(dto.email())) {
-            throw new RuntimeException("Já existe um usuário com esse email");
+            throw new BusinessException("Já existe um usuário com esse email");
         }
 
         Usuario usuario = UsuarioMapper.toEntity(dto);
@@ -57,8 +59,8 @@ public class UsuarioService {
     public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioCreateDTO dto) {
 
         Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
-                        "Usuário não encontrado. Id: " + id
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Usuário não encontrado! id: " + id
                 ));
         usuarioExistente.setNome(dto.nome());
         usuarioExistente.setEmail(dto.email());
@@ -71,7 +73,7 @@ public class UsuarioService {
 
     public void deletarUsuario(Long id) {
         if (!usuarioRepository.existsById(id)) {
-            throw new RuntimeException("Usuário não encontrado. Id: " + id);
+            throw new ResourceNotFoundException("Usuário não encontrado. Id: " + id);
         }
 
         usuarioRepository.deleteById(id);

@@ -3,6 +3,7 @@ package com.educacaoambiental.backend.exception;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -74,5 +75,17 @@ public class GlobalExcptionHandler{
         response.put("message", "Ocorreu um erro interno no servidor");
         response.put("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleJsonError(HttpMessageNotReadableException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("timestamp", LocalDateTime.now());
+        response.put("message", "Erro no formato do JSON enviado");
+        response.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

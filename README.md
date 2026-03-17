@@ -108,23 +108,32 @@ Aqui estão algumas das principais rotas da API e exemplos de requisição e res
 ```bash
 docker network create educacao-network
 
-Run PostgreSQL
-docker run --name educacaodb \
--p 5432:5432 \
--e POSTGRES_PASSWORD=admin \
--e POSTGRES_USER=admin \
--e POSTGRES_DB=educacao_db \
---network educacao-network \
--d postgres:15
+services:
+  postgres:
+    image: postgres:15
+    container_name: educacao_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: educacao_db
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: educacao_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: your_email@example.com
+      PGADMIN_DEFAULT_PASSWORD: your_password
+    ports:
+      - "5050:80"
 
-Run PgAdmin
-docker run --name pgadmin4 \
--e PGADMIN_DEFAULT_EMAIL=admin@educacao.com \
--e PGADMIN_DEFAULT_PASSWORD=admin \
--p 15432:80 \
---network educacao-network \
--d dpage/pgadmin4:8.9
+volumes:
+  postgres_data:
 ```
 
 ---
@@ -161,8 +170,8 @@ Make sure your application.properties is configured correctly:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/educacao_db
-spring.datasource.username=admin
-spring.datasource.password=admin123
+spring.datasource.username=your_user
+spring.datasource.password=your_password
 ```
 
 ---

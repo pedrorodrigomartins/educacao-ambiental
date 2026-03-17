@@ -6,13 +6,31 @@
 /pom.xml.tag
 /pom.xml.releaseBackup
 /pom.xml.versionsBackup
+
+# Logs
+*.log
 /logs/
+
 # IntelliJ
-/.idea/
-/*.iml
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
 
 # OS files
 .DS_Store
+Thumbs.db
 
-# Environment
+# Environment variables
 .env
+.env.*
+
+# Mac temporary files
+*.swp
+
+# Java
+*.jar
+*.war
+*.ear

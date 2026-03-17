@@ -28,9 +28,9 @@
 - [📍 API Endpoints](#routes)
 - [GET /users](#get-users)
 - [POST /users](#post-users)
-- [🏗 Project Architecture](#Project Architecture)
-- [⚠️ Error Handling](#Error Handling)
-- [📚 Best Practices Applied](#Best Practices Applied)
+- [🏗 Project Architecture](#Project-Architecture)
+- [⚠️ Error Handling](#Error-Handling)
+- [📚 Best Practices Applied](#Best-Practices-Applied)
 - [🤝 Collaborators](#colab)
 
 </details>

@@ -1,37 +1,48 @@
-# Compiled class files
+# =========================
+# Java / Spring Boot
+# =========================
 *.class
+*.jar
+*.war
+*.ear
 
 # Maven
-/target/
-/pom.xml.tag
-/pom.xml.releaseBackup
-/pom.xml.versionsBackup
+target/
+backend/target/
 
 # Logs
 *.log
-/logs/
+logs/
 
-# IntelliJ
+# =========================
+# IDE
+# =========================
 .idea/
 *.iml
+.vscode/
 out/
 
-# VSCode
-.vscode/
-
-# OS files
+# =========================
+# OS
+# =========================
 .DS_Store
 Thumbs.db
 
-# Environment variables
+# =========================
+# ENV
+# =========================
 .env
 .env.*
 application.properties
 
-# Mac temporary files
-*.swp
+# =========================
+# Frontend (React / Vite)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
 
-# Java
-*.jar
-*.war
-*.ear
+# =========================
+# Mac temp
+# =========================
+*.swp

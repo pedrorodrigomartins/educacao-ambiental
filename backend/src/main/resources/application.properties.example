@@ -1,0 +1,11 @@
+spring.datasource.url=jdbc:postgresql://localhost:5432/educacao_db
+spring.datasource.username=your_user
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+server.port=8080
+
+jwt.secret=ZmFrZWtleWZvcmRldmVsb3BtZW50MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+jwt.expiration=86400000

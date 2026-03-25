@@ -1,0 +1,12 @@
+com/educacaoambiental/backend/config/CorsConfig.class
+com/educacaoambiental/backend/controller/AuthController.class
+com/educacaoambiental/backend/service/AuthService.class
+com/educacaoambiental/backend/config/SecurityConfig.class
+com/educacaoambiental/backend/security/JwtAuthenticationFilter.class
+com/educacaoambiental/backend/BackendApplication.class
+com/educacaoambiental/backend/dto/response/LoginResponse.class
+com/educacaoambiental/backend/security/JwtService.class
+com/educacaoambiental/backend/dto/request/LoginRequest.class
+com/educacaoambiental/backend/dto/request/RegistroUsuarioRequest.class
+com/educacaoambiental/backend/dto/response/RegistroUsuarioResponse.class
+com/educacaoambiental/backend/security/CustomUserDetailsService.class

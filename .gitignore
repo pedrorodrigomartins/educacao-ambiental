@@ -45,4 +45,4 @@ frontend/.vite/
 # =========================
 # Mac temp
 # =========================
-*.swp
+*.swpnode_modules/

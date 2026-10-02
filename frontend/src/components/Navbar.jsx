@@ -1,18 +1,23 @@
-import { Link } from "react-router-dom";
+import SectionLink from "./SectionLink";
+import { sectionNavigation } from "../data/sectionNavigation";
 
 function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="logo">Educação Ambiental</div>
+    <header className="site-header">
+      <nav className="navbar container" aria-label="Navegação principal">
+        <SectionLink className="logo" id="inicio">
+          eCoLab
+        </SectionLink>
 
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/Jogo">Jogo</Link>
-        <Link to="/Livro">Livro</Link>
-        <Link to="/ConteudosAdmin">Catálago</Link>
-        <Link to="/Sobre">Sobre</Link>
-      </div>
-    </nav>
+        <div className="nav-links">
+          {sectionNavigation.map(({ id, label }) => (
+            <SectionLink key={id} id={id}>
+              {label}
+            </SectionLink>
+          ))}
+        </div>
+      </nav>
+    </header>
   );
 }
 

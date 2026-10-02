@@ -1081,7 +1081,7 @@ h3,
         font-size: 1.55rem;
     }
 
-    .researcher-copy > p {
+    .researcher-copy>p {
         font-size: 0.82rem;
         line-height: 1.55;
     }
@@ -1126,4 +1126,8 @@ h3,
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+.researcher-copy p+p {
+    margin-top: 1rem;
 }

@@ -19,7 +19,7 @@ function Hero() {
             Trilhas da Educação Ambiental
           </h1>
           <p className="hero-description">
-            Da escuta do território à ação coletiva, um passo de cada vez.
+            Um percurso para a construção de projetos transformadores
           </p>
 
           <div className="hero-buttons">

@@ -1,4 +1,5 @@
+
 User-agent: *
 Allow: /
 
-Sitemap: https://educacao-ambiental-three.vercel.app/sitemap.xml
+Sitemap: https://www.trilhaseducacaoambiental.com.br/sitemap.xml

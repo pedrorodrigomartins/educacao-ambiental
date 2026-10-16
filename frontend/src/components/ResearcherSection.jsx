@@ -46,12 +46,18 @@ function ResearcherSection() {
           </p>
 
           <p>
-            Hoje, minha pesquisa investiga as contribuições do{' '}
-            <strong>Design for Change</strong> e da <strong>gamificação</strong> para
-            o protagonismo dos estudantes e a cidadania ambiental.
-            O <strong>Trilhas da Educação Ambiental</strong> nasce desse percurso e
-            do desejo de apoiar outros professores na construção de projetos
-            socioambientais com investigação, participação e intencionalidade pedagógica.
+            Hoje, sob a orientação do Prof. Dr. Eduardo Ferro dos Santos,
+            minha pesquisa investiga as contribuições do
+            <strong>Design for Change</strong> e da
+            <strong>gamificação</strong> para o
+            <strong>protagonismo dos estudantes</strong> e a
+            <strong>cidadania ambiental</strong>.
+            O <strong>Trilhas da Educação Ambiental</strong> nasce
+            desse percurso e do desejo de apoiar outros professores
+            na construção de <strong>projetos socioambientais</strong>
+            com <strong>investigação</strong>,
+            <strong>participação</strong> e
+            <strong>intencionalidade pedagógica</strong>.
           </p>
         </div>
       </div>
